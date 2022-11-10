@@ -87,7 +87,11 @@ class Request
      */
     public function url(): string
     {
-        return rtrim($this->request->getUriForPath('/'), '/');
+        $scheme = getenv('APP_ENV') == 'production'
+            ? 'https'
+            : 'http';
+    
+        return rtrim($scheme . '://' . $this->request->getHttpHost(), '/');
     }
 
     /**
